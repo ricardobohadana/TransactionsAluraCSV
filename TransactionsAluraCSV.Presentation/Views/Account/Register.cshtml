@@ -1,0 +1,46 @@
+﻿@model TransactionsAluraCSV.Presentation.Models.AccountRegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <header class="card-header">
+        <h1 class="title is-3 p-5">Cadastro de Usuário</h1>
+    </header>
+    <div class="card-content">
+        @using (Html.BeginForm()){
+
+            <div class="field">
+                <label for="" class="label">Nome:</label>
+                <p class="control has-icons-left">
+                    @Html.TextBoxFor(model => model.Name, new {@class="input", @placeholder="Insira seu nome"})
+                    @* <input class="input" type="text" placeholder="Nome"> *@
+                    <span class="icon is-small is-left">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                </p>
+            </div>
+
+            <div class="field">
+                <label for="" class="label">Email:</label>
+                <p class="control has-icons-left has-icons-right">
+                    @Html.TextBoxFor(model => model.Email, new {@class="input", @placeholder="Insira seu email"})
+                    @* <input class="input" type="email" placeholder="Email"> *@
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                @* <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span> *@
+                </p>
+                <p class="help has-text-weight-normal mb-3 is-italic">Sua senha será gerada automaticamente pelo nosso servidor e enviada para seu email de cadastro.</p>
+            </div>
+            
+            <div class="card-footer">
+                <button class="card-footer-item button is-success" type="submit">Cadastrar</button>
+            </div>
+                <p class="is-italic help">Já tem conta? Faça login <a class="is-underlined" href="/Account/Login">clicando aqui!</a></p>
+        }
+    </div>
+</div>

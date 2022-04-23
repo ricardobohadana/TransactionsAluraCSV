@@ -1,0 +1,32 @@
+﻿@model TransactionsAluraCSV.Presentation.Models.TransactionIndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Data da transação</th>
+            <th>Cadastrada por</th>
+            <th>Quantidade de Transações</th>
+            <th>
+                <a class="button is-light is-primary" href="/Transaction/Create">Enviar Arquivo</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model.TransferGroups.Count > 0)
+        {
+            foreach (var t in Model.TransferGroups)
+            {
+                <tr>
+                    <th>@t.TransferDate.ToString("dd/MM/yyyy")</th>
+                    <th>@t.user.Name</th>
+                    <th><a class="button is-light is-secondary">Detalhes</a></th>
+                </tr>
+            }
+            
+        }
+    </tbody>
+</table>
