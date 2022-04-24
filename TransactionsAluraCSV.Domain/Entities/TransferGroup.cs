@@ -9,8 +9,9 @@ namespace TransactionsAluraCSV.Domain.Entities
     public class TransferGroup
     {
         public DateTime TransferDate { get; set; }
-        public User user { get; set; }
-        public List<Transfer> Transfers { get; set; }
+        public User User { get; set; }
+        public int NumOfTransfers { get; set; }
+        public DateTime RegisterDate { get; set; }
 
     }
 }

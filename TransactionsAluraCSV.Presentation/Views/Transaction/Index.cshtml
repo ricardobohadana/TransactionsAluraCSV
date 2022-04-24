@@ -9,6 +9,7 @@
         <tr>
             <th>Data da transação</th>
             <th>Cadastrada por</th>
+            <th>Data de Importação</th>
             <th>Quantidade de Transações</th>
             <th>
                 <a class="button is-light is-primary" href="/Transaction/Create">Enviar Arquivo</a>
@@ -21,8 +22,10 @@
             foreach (var t in Model.TransferGroups)
             {
                 <tr>
-                    <th>@t.TransferDate.ToString("dd/MM/yyyy")</th>
-                    <th>@t.user.Name</th>
+                    <th>@t.TransferDate.ToString("dd/MM/yyyy HH:mm")</th>
+                    <th>@t.User.Name</th>
+                    <th>@t.RegisterDate.ToString("dd/MM/yyyy HH:mm")</th>
+                    <th>@t.NumOfTransfers</th>
                     <th><a class="button is-light is-secondary">Detalhes</a></th>
                 </tr>
             }

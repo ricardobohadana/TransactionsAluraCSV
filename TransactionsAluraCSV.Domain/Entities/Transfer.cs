@@ -28,6 +28,8 @@ namespace TransactionsAluraCSV.Domain.Entities
 
         public DateTime TransferDate { get; set; }
 
+        public DateTime RegisterDate { get; set; }
+
         public User User { get; set; }
     }
 }

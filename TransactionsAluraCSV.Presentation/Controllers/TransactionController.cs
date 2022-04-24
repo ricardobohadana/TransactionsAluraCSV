@@ -23,8 +23,14 @@ namespace TransactionsAluraCSV.Presentation.Controllers
         // GET: TransactionController
         public IActionResult Index()
         {
+            var groups = _transferService.GetTransferGroups();
 
-            return View();
+            TransactionIndexModel model = new()
+            {
+                TransferGroups = groups
+            };
+
+            return View(model);
         }
 
         // GET: TransactionController/Create
@@ -51,6 +57,8 @@ namespace TransactionsAluraCSV.Presentation.Controllers
                 var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
                     HasHeaderRecord = false,
+                    MissingFieldFound = null,
+                    ShouldSkipRecord = record => record.Record.Any(field => String.IsNullOrWhiteSpace(field) || String.IsNullOrEmpty(field))
                 };
 
                 using (var reader = new StreamReader(File.OpenReadStream()))
@@ -60,7 +68,8 @@ namespace TransactionsAluraCSV.Presentation.Controllers
                     transferList = csv.GetRecords<Transfer>().ToList();
                 }
                 _transferService.CreateTransfer(transferList, Guid.Parse(HttpContext.User.Identity.Name));
-                
+
+                TempData["MensagemSucesso"] = $"Parabéns, as transações para o dia {transferList[0].TransferDate.ToString("dd/MM/yyyy")} foram cadastradas.";
             }
             catch (Exception e)
             {

@@ -33,6 +33,8 @@ namespace TransactionsAluraCSV.Infra.Data.Mappings
 
             builder.Property(transfer => transfer.TransferAmount).HasColumnName("TRANSFERAMOUNT").IsRequired();
             builder.Property(transfer => transfer.TransferDate).HasColumnName("TRANSFERDATE").IsRequired();
+
+            builder.Property(transfer => transfer.RegisterDate).HasColumnName("REGISTERDATE").IsRequired();
         }
     }
 }

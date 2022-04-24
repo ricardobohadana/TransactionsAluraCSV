@@ -11,6 +11,6 @@ namespace TransactionsAluraCSV.Domain.Interfaces.Services
     {
         void CreateTransfer(List<Transfer> transferList, Guid userId);
 
-        //TransferGroup get
+        List<TransferGroup> GetTransferGroups();
     }
 }
