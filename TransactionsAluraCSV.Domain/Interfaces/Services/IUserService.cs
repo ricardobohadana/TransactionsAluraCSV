@@ -13,5 +13,12 @@ namespace TransactionsAluraCSV.Domain.Interfaces.Services
 
         User LogIn(string email, string password);
 
+        List<User> GetUsers();
+
+        void DeleteUser(Guid id);
+
+        User GetUser(Guid id);
+
+        void UpdateUser(User user);
     }
 }

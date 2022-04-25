@@ -48,5 +48,27 @@ namespace TransactionsAluraCSV.Domain.Services
 
             return user;
         }
+
+        public List<User> GetUsers()
+        {
+            return _userRepository.GetAll();
+        }
+
+        public void DeleteUser(Guid id)
+        {
+            _userRepository.DeleteById(id);
+        }
+
+        public User GetUser(Guid id)
+        {
+            User user = _userRepository.GetById(id);
+            if (user == null) throw new Exception("Usuário não encontrado.");
+            return user;
+        }
+
+        public void UpdateUser(User user)
+        {
+            _userRepository.Update(user);
+        }
     }
 }
