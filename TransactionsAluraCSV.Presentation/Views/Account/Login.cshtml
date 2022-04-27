@@ -36,9 +36,17 @@
             </div>
             
             <div class="card-footer">
-                <button class="card-footer-item button is-success" type="submit">Iniciar sessão</button>
+                <button id="submitBtn" class="card-footer-item button is-success" type="submit">Iniciar sessão</button>
             </div>
             <p class="is-italic help">Não tem conta? Cadastre-se <a class="is-underlined" href="/Account/Register">clicando aqui!</a></p>
         }
     </div>
 </div>
+<script>
+    document.onreadystatechange = function() {
+        btn = document.getElementById("submitBtn");
+        btn.addEventListener("click", () => {
+            btn.classList.add("is-loading");
+        })
+    }
+</script>

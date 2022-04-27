@@ -16,33 +16,21 @@
             <table class="table is-fullwidth is-striped is-hoverable">
                 <thead>
                     <tr>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            Guid
-                        </th>
-                        <th>
-                            Nome
-                        </th>
-                        <th>
-                            <a class="button is-secondary is-light" asp-action="Create">Criar Usuário</a>
+                        <th class="is-vcentered">Email</th>
+                        <th class="is-vcentered">Guid</th>
+                        <th class="is-vcentered">Nome</th>
+                        <th class="is-vcentered" style="text-align: right;">
+                            <a class="button is-secondary is-light" href="/User/Create">Criar Usuário</a>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach (var item in Model.Users) {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
+                        <td class="is-vcentered">@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td class="is-vcentered">@Html.DisplayFor(modelItem => item.UserId)</td>
+                        <td class="is-vcentered">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="is-vcentered" style="text-align: right;">
                             <a class="button is-light is-warning" href="/User/Edit?id=@item.UserId">Edit</a>
                             <a class="button is-light is-danger" href="/User/Delete?id=@item.UserId">Delete</a>
                         </td>

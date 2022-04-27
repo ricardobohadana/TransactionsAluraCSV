@@ -1,12 +1,12 @@
-﻿@model TransactionsAluraCSV.Presentation.Models.AccountRegisterModel
+﻿@model TransactionsAluraCSV.Presentation.Models.UserCreateModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="card">
     <header class="card-header">
-        <h1 class="title is-3 p-5">Cadastro de Usuário</h1>
+        <h1 class="title is-3 p-5">Cadastro Interno de Usuário</h1>
     </header>
     <div class="card-content">
         @using (Html.BeginForm()){
@@ -34,13 +34,12 @@
                     <i class="fas fa-check"></i>
                 </span> *@
                 </p>
-                <p class="help has-text-weight-normal mb-3 is-italic">Sua senha será gerada automaticamente pelo nosso servidor e enviada para seu email de cadastro.</p>
+                <p class="help has-text-weight-normal mb-3 is-italic">A senha desta conta será gerada automaticamente pelo servidor e enviada para o email de cadastro.</p>
             </div>
             
             <div class="card-footer">
                 <button id="submitBtn" class="card-footer-item button is-success" type="submit">Cadastrar</button>
             </div>
-                <p class="is-italic help">Já tem conta? Faça login <a class="is-underlined" href="/Account/Login">clicando aqui!</a></p>
         }
     </div>
 </div>

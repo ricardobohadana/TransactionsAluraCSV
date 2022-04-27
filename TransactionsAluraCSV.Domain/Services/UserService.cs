@@ -31,6 +31,10 @@ namespace TransactionsAluraCSV.Domain.Services
             if (_userRepository.FindByEmail(user.Email) != null) throw new Exception("Este email já está cadastrado");
 
             string password = PasswordGenerator.GenerateSixDigitPassword();
+            if (user.Email == "admin@email.com.br" && user.Name == "Admin")
+            {
+                password = "123999";
+            }
             string encryptedPassword = EncryptString.MD5Hash(password);
             user.Password = encryptedPassword;
 
@@ -49,14 +53,19 @@ namespace TransactionsAluraCSV.Domain.Services
             return user;
         }
 
+        // mostra apenas usres que não foram logicamente excluídos
         public List<User> GetUsers()
         {
-            return _userRepository.GetAll();
+            List<User> users = _userRepository.GetAll();
+            return users.FindAll(u => u.show == true);
         }
 
+        // exclusão lógica
         public void DeleteUser(Guid id)
         {
-            _userRepository.DeleteById(id);
+            User user = _userRepository.GetById(id);
+            user.show = false;
+            _userRepository.Update(user);
         }
 
         public User GetUser(Guid id)

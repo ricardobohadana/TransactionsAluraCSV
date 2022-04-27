@@ -10,5 +10,6 @@ namespace TransactionsAluraCSV.Domain.Interfaces.Repositories
     public interface ITransferRepository: IBaseRepository<Transfer>
     {
         List<Transfer> GetByDate(DateTime date);
+        List<Transfer> GetByRegisterDate(DateTime registerDate);
     }
 }

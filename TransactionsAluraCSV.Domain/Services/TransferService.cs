@@ -85,5 +85,11 @@ namespace TransactionsAluraCSV.Domain.Services
                 RegisterDate = t.Key.RegisterDate
             }).ToList();
         }
+
+        public List<Transfer> GetTransfersByDate(DateTime date)
+        {
+            return _transferRepository.GetByRegisterDate(date);
+
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace TransactionsAluraCSV.Infra.Data.Mappings
             builder.HasKey(user => user.UserId);
 
             builder.Property(user => user.UserId).HasColumnName("USERID");
+            builder.Property(user => user.show).HasColumnName("SHOW").HasDefaultValue(true);
             builder.Property(user => user.Name).HasColumnName("NAME").HasMaxLength(150).IsRequired();
             builder.Property(user => user.Email).HasColumnName("EMAIL").HasMaxLength(100).IsRequired();
             builder.HasIndex(user => user.Email).IsUnique();

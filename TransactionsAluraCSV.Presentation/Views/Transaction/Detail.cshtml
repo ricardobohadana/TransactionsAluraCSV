@@ -1,0 +1,50 @@
+﻿@using System.Globalization
+@model TransactionsAluraCSV.Presentation.Models.TransactionDetailModel
+@{
+    ViewData["Title"] = "Transações";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-title">Detalhes de transações enviadas do dia @Model.Transfers[0].TransferDate.ToShortDateString()</div>
+    </div>
+    <div class="card-body">
+        <table class="table is-striped is-hoverable is-fullwidth is-bordered">
+            <thead>
+                <tr>
+                    <th colspan="3" class="is-vcentered has-text-centered">ORIGEM</th>
+                    <th colspan="3" class="is-vcentered has-text-centered">DESTINO</th>
+                    <th colspan="1" class="is-vcentered has-text-right">VALOR</th>
+                </tr>
+                <tr>
+                    <th class="is-vcentered">Banco</th>
+                    <th class="is-vcentered has-text-right">Agencia</th>
+                    <th class="is-vcentered has-text-right">Conta</th>
+                    <th class="is-vcentered">Banco</th>
+                    <th class="is-vcentered has-text-right">Agencia</th>
+                    <th class="is-vcentered has-text-right">Conta</th>
+                    <th class="is-vcentered has-text-right">
+                        Valor da Transação
+                    </th>
+                </tr>
+            </thead>
+        <tbody>
+          @foreach (var t in Model.Transfers)
+          {
+                  <tr key={index}>
+                    <td class="is-vcentered">@t.OriginBank</td>
+                    <td class="is-vcentered has-text-right">@t.OriginAgency</td>
+                    <td class="is-vcentered has-text-right">@t.OriginAccount</td>
+                    <td class="is-vcentered">@t.DestinationBank</td>
+                    <td class="is-vcentered has-text-right">@t.DestinationAgency</td>
+                    <td class="is-vcentered has-text-right">@t.DestinationAccount</td>
+                    <td class="is-vcentered has-text-right">
+                      @t.TransferAmount.ToString("C", CultureInfo.CurrentCulture)
+                    </td>
+                  </tr>
+          }
+        </table>
+    </div>
+</div>
+

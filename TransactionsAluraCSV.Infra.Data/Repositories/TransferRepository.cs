@@ -21,7 +21,16 @@ namespace TransactionsAluraCSV.Infra.Data.Repositories
 
         public List<Transfer> GetByDate(DateTime date)
         {
-            return _postgreSqlContext.Transfers.Where(t => t.TransferDate.Date.Equals(date.Date)).ToList();
+            return _postgreSqlContext.Transfers.Where(t =>
+                t.TransferDate.DayOfYear.Equals(date.DayOfYear) &&
+                t.TransferDate.Year.Equals(date.Year)).ToList();
+        }
+
+        public List<Transfer> GetByRegisterDate(DateTime registerDate)
+        {
+            return _postgreSqlContext.Transfers.Where(t =>
+                t.RegisterDate.DayOfYear.Equals(registerDate.DayOfYear) &&
+                t.RegisterDate.Year.Equals(registerDate.Year)).ToList();
         }
     }
 }

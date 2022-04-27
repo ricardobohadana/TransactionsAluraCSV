@@ -4,32 +4,43 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Data da transação</th>
-            <th>Cadastrada por</th>
-            <th>Data de Importação</th>
-            <th>Quantidade de Transações</th>
-            <th>
-                <a class="button is-light is-primary" href="/Transaction/Create">Enviar Arquivo</a>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if(Model.TransferGroups.Count > 0)
-        {
-            foreach (var t in Model.TransferGroups)
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-title">
+            Arquivos de transações enviados
+        </div>
+    </div>
+    <table class="table is-hoverable is-striped is-fullwidth">
+        <thead>
+            <tr>
+                <th class="is-vcentered">Data da transação</th>
+                <th class="is-vcentered">Cadastrada por</th>
+                <th class="is-vcentered" style="text-align: right">Data de Importação</th>
+                <th class="is-vcentered" style="text-align: right">Quantidade de Transações</th>
+                <th class="is-vcentered" style="text-align: right">
+                    <a class="button is-light is-primary" href="/Transaction/Create">Enviar Arquivo</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.TransferGroups.Count > 0)
             {
-                <tr>
-                    <th>@t.TransferDate.ToString("dd/MM/yyyy HH:mm")</th>
-                    <th>@t.User.Name</th>
-                    <th>@t.RegisterDate.ToString("dd/MM/yyyy HH:mm")</th>
-                    <th>@t.NumOfTransfers</th>
-                    <th><a class="button is-light is-secondary">Detalhes</a></th>
-                </tr>
-            }
+                foreach (var t in Model.TransferGroups)
+                {
+                    var regDate = t.RegisterDate.ToString("dd/MM/yyyy HH:mm");
+                    var regDateUrl = t.RegisterDate.ToString("dd-MM-yyyy");
+                    <tr>
+                        <td class="is-vcentered">@t.TransferDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="is-vcentered">@t.User.Name</td>
+                        <td class="is-vcentered" style="text-align: right">@regDate</td>
+                        <td class="is-vcentered" style="text-align: right">@t.NumOfTransfers</td>
+                        <td class="is-vcentered" style="text-align: right">
+                            <a href="/Transaction/Detail?date=@(regDateUrl)" class="button is-light is-info">Detalhes</a>
+                        </td>
+                    </tr>
+                }
             
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
+</div>

@@ -12,5 +12,7 @@ namespace TransactionsAluraCSV.Domain.Interfaces.Services
         void CreateTransfer(List<Transfer> transferList, Guid userId);
 
         List<TransferGroup> GetTransferGroups();
+
+        List<Transfer> GetTransfersByDate(DateTime date);
     }
 }
