@@ -78,26 +78,28 @@ namespace TransactionsAluraCSV.Presentation.Controllers
                 return View();
         }
 
-        // GET: TransactionController/Edit/5
-        public IActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: TransactionController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Detail(string date)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                DateTime registerDate = DateTime.SpecifyKind(DateTime.Parse(date), DateTimeKind.Utc);
+
+                List<Transfer> transfersList = _transferService.GetTransfersByDate(registerDate);
+
+                TransactionDetailModel model = new()
+                {
+                    Transfers = transfersList,
+                };
+
+                return View(model);
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                TempData["MensagemErro"] = "Ocorreu um erro: " + e.Message;
+                return RedirectToAction("Index");
             }
         }
+
 
         // GET: TransactionController/Delete/5
         public IActionResult Delete(int id)
