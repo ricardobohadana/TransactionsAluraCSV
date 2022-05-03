@@ -1,4 +1,5 @@
 ﻿using TransactionsAluraCSV.Domain.Entities;
+using TransactionsAluraCSV.Domain.Models;
 
 namespace TransactionsAluraCSV.Presentation.Models
 {

@@ -32,5 +32,10 @@ namespace TransactionsAluraCSV.Infra.Data.Repositories
                 t.RegisterDate.DayOfYear.Equals(registerDate.DayOfYear) &&
                 t.RegisterDate.Year.Equals(registerDate.Year)).ToList();
         }
+
+        public List<Transfer> GetByMonthAndYear(int month, int year)
+        {
+            return _postgreSqlContext.Transfers.Where(t => t.TransferDate.Year == year && t.TransferDate.Month == month).ToList();
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace TransactionsAluraCSV.Domain.Interfaces.Repositories
     {
         List<Transfer> GetByDate(DateTime date);
         List<Transfer> GetByRegisterDate(DateTime registerDate);
+        List<Transfer> GetByMonthAndYear(int month, int year);
     }
 }

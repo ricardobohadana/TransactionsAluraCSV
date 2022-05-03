@@ -3,6 +3,7 @@ using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Globalization;
 using TransactionsAluraCSV.Domain.Entities;
 using TransactionsAluraCSV.Domain.Interfaces.Services;
@@ -106,5 +107,49 @@ namespace TransactionsAluraCSV.Presentation.Controllers
         {
             return View();
         }        
+
+        public IActionResult Reports()
+        {
+            List<SelectListItem> months = new();
+            for (int i = 1; i <= 12; i++)
+            {
+                var monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i);
+                months.Add(new SelectListItem(monthName, $"{i}"));
+            }
+
+            TransactionReportsModel model = new()
+            {
+                MonthList = months,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Reports(TransactionReportsModel model)
+        {
+            try
+            {
+                int month = Int32.Parse(model.Month);
+                if (month > 12 || month < 1) throw new Exception("O mês definido é inválido");
+                var data = _transferService.GetSuspiciousMovements(month, model.Year);
+
+                model.SuspiciousData = data;
+
+            }
+            catch (Exception e)
+            {
+                TempData["MensagemErro"] = "Ocorreu um erro: " + e.Message;
+            }
+
+            List<SelectListItem> months = new();
+            for (int i = 1; i <= 12; i++)
+            {
+                var monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i);
+                months.Add(new SelectListItem(monthName, $"{i}"));
+            }
+            model.MonthList = months;
+            return View(model);
+        }
     }
 }

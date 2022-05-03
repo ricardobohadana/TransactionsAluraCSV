@@ -29,10 +29,10 @@
                     </th>
                 </tr>
             </thead>
-        <tbody>
-          @foreach (var t in Model.Transfers)
-          {
-                  <tr key={index}>
+            <tbody>
+                @foreach (var t in Model.Transfers)
+                {
+                    <tr key={index}>
                     <td class="is-vcentered">@t.OriginBank</td>
                     <td class="is-vcentered has-text-right">@t.OriginAgency</td>
                     <td class="is-vcentered has-text-right">@t.OriginAccount</td>
@@ -40,10 +40,11 @@
                     <td class="is-vcentered has-text-right">@t.DestinationAgency</td>
                     <td class="is-vcentered has-text-right">@t.DestinationAccount</td>
                     <td class="is-vcentered has-text-right">
-                      @t.TransferAmount.ToString("C", CultureInfo.CurrentCulture)
+                        @t.TransferAmount.ToString("C", CultureInfo.CurrentCulture)
                     </td>
-                  </tr>
-          }
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>
