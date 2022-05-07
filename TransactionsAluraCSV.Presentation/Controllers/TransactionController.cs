@@ -1,5 +1,4 @@
-﻿using CsvHelper;
-using CsvHelper.Configuration;
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +14,7 @@ namespace TransactionsAluraCSV.Presentation.Controllers
     public class TransactionController : Controller
     {
         private readonly ITransferService _transferService;
+        private readonly IFileService _fileService;
 
         public TransactionController(ITransferService transferService)
         {
@@ -44,30 +44,24 @@ namespace TransactionsAluraCSV.Presentation.Controllers
         [HttpPost]
         public IActionResult Create(IFormFile File)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    TempData["MensagemErro"] = "Os dados inseridos estão incorretos, por favor verifique.";
-
-            //    return View();
-            //}
 
             try
             {
-                List<Transfer> transferList;
+                List<Transfer> transferList; 
 
-                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                if (File.FileName.EndsWith(".csv"))
                 {
-                    HasHeaderRecord = false,
-                    MissingFieldFound = null,
-                    ShouldSkipRecord = record => record.Record.Any(field => String.IsNullOrWhiteSpace(field) || String.IsNullOrEmpty(field))
-                };
+                    transferList = _fileService.CsvReader(File);
 
-                using (var reader = new StreamReader(File.OpenReadStream()))
-                using (var csv = new CsvReader(reader, config))
+                }else if (File.FileName.EndsWith(".xml"))
                 {
-                    csv.Context.RegisterClassMap<TransferMap>();
-                    transferList = csv.GetRecords<Transfer>().ToList();
+                    transferList = _fileService.XmlReader(File);
                 }
+                else
+                {
+                    throw new Exception("Formato de arquivo não aceito! Por favor, envie um arquivo .csv ou .xml");
+                }
+                                
                 _transferService.CreateTransfer(transferList, Guid.Parse(HttpContext.User.Identity.Name));
 
                 TempData["MensagemSucesso"] = $"Parabéns, as transações para o dia {transferList[0].TransferDate.ToString("dd/MM/yyyy")} foram cadastradas.";

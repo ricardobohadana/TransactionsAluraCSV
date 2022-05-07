@@ -18,13 +18,14 @@ builder.Services.AddDistributedMemoryCache();
 // Working with Entity Framework Core
 bool isDev = true;
 string connectionString = builder.Configuration.GetConnectionString("Postgres");
-builder.Services.AddDbContext<PostgreSqlContext>(_ => _.UseNpgsql(connectionString));
+builder.Services.AddDbContext<PostgreSqlContext>(builder => builder.UseNpgsql(connectionString));
 
 // injeção de dependência dos repositórios
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ITransferRepository, TransferRepository>();
 
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<ITransferService, TransferService>();
 builder.Services.AddTransient<IMailProvider, MailProvider>();
 

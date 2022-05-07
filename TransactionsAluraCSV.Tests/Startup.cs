@@ -40,6 +40,7 @@ namespace TransactionsAluraCSV.Tests
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITransferRepository, TransferRepository>();
+            services.AddTransient<IFileService, FileService>();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITransferService, TransferService>();
