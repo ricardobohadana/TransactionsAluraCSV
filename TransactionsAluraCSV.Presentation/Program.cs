@@ -1,3 +1,4 @@
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using TransactionsAluraCSV.Domain.Interfaces.Mail;
@@ -10,15 +11,31 @@ using TransactionsAluraCSV.Infra.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 // Working with sessions
 builder.Services.AddDistributedMemoryCache();
 
+Env.Load();
+
 // Working with Entity Framework Core
-bool isDev = true;
-string connectionString = builder.Configuration.GetConnectionString("Postgres");
+bool isDev = false;
+
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
+
+if (connectionString == null)
+{
+    connectionString = builder.Configuration.GetConnectionString("Postgres");
+}
+
 builder.Services.AddDbContext<PostgreSqlContext>(builder => builder.UseNpgsql(connectionString));
+
+//get environment 
+//builder.Configuration.AddEnvironmentVariables();
+//var dotenv = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+
 
 // injeção de dependência dos repositórios
 builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -67,6 +84,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Forbidden/";
     }
 );
+
 
 
 var app = builder.Build();

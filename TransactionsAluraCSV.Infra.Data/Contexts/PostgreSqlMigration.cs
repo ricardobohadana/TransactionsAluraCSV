@@ -14,6 +14,7 @@ namespace TransactionsAluraCSV.Infra.Data.Contexts
         public PostgreSqlContext CreateDbContext(string[] args)
         {
             var configurationBuilder = new ConfigurationBuilder();
+            //var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
             var path = Path.Combine(Directory.GetCurrentDirectory(),"appsettings.json");
             configurationBuilder.AddJsonFile(path, false);
             var root = configurationBuilder.Build();

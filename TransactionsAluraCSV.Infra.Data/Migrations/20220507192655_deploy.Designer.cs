@@ -12,8 +12,8 @@ using TransactionsAluraCSV.Infra.Data.Contexts;
 namespace TransactionsAluraCSV.Infra.Data.Migrations
 {
     [DbContext(typeof(PostgreSqlContext))]
-    [Migration("20220424012801_TransferFix")]
-    partial class TransferFix
+    [Migration("20220507192655_deploy")]
+    partial class deploy
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,6 +114,12 @@ namespace TransactionsAluraCSV.Infra.Data.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("character varying(70)")
                         .HasColumnName("PASSWORD");
+
+                    b.Property<bool?>("show")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true)
+                        .HasColumnName("SHOW");
 
                     b.HasKey("UserId");
 
