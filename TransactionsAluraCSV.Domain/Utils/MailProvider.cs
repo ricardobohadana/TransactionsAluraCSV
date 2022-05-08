@@ -28,12 +28,12 @@ namespace TransactionsAluraCSV.Domain.Utils
             return new MailjetClient(_api_key, _api_secret);
         }
 
-        public async Task SendPassword(string emailAddress, string password)
+        public void SendPassword(string emailAddress, string password)
         {
             var client =  CreateMailjetClient();
             var request = new MailjetRequest
             {
-                Resource = Send.Resource
+                Resource = SendV31.Resource
             }
             .Property(Send.Messages, new JArray {
              new JObject {
@@ -72,11 +72,11 @@ namespace TransactionsAluraCSV.Domain.Utils
              }
             });
 
-            MailjetResponse response = await client.PostAsync(request);
-            if (!response.IsSuccessStatusCode) 
-            {
-                throw new Exception($"Status de erro: {response.StatusCode}\nInformações: {response.GetErrorInfo()}\nMensagem de erro: {response.GetErrorMessage()}");
-            }
+            client.PostAsync(request);
+            //if (!response.IsSuccessStatusCode) 
+            //{
+            //    throw new Exception($"Status de erro: {response.StatusCode}\nInformações: {response.GetErrorInfo()}\nMensagem de erro: {response.GetErrorMessage()}");
+            //}
 
 
         }

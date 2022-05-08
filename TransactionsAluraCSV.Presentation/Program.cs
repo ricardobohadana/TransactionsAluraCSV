@@ -47,10 +47,10 @@ builder.Services.AddDbContext<PostgreSqlContext>(builder => builder.UseNpgsql(co
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ITransferRepository, TransferRepository>();
 builder.Services.AddTransient<IFileService, FileService>();
+builder.Services.AddTransient<IMailProvider>(map => new MailProvider(api_key, api_secret));
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITransferService, TransferService>();
-builder.Services.AddTransient<IMailProvider>(map => new MailProvider(api_key, api_secret));
 
 //else
 //{
@@ -95,7 +95,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 );
 
 // Railway app
-
 var portVar = Environment.GetEnvironmentVariable("PORT");
 if (portVar is { Length: > 0 } && int.TryParse(portVar, out int port))
 {
