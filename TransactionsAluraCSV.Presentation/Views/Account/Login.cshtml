@@ -22,6 +22,7 @@
                     <i class="fas fa-check"></i>
                 </span> *@
                 </p>
+                <p class="help is-danger">@Html.ValidationMessageFor(model => model.Email)</p>
             </div>
             <div class="field">
                 <label for="" class="label">Senha:</label>
@@ -32,6 +33,7 @@
                     <i class="fas fa-lock"></i>
                 </span>
                 </p>
+                <p class="help is-danger">@Html.ValidationMessageFor(model => model.Password)</p>
                 <p class="help has-text-weight-normal mb-3 is-italic">Insira a senha enviada para seu email de cadastro.</p>
             </div>
             

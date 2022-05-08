@@ -11,6 +11,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using TransactionsAluraCSV.Presentation.Models;
 using System.Xml.Serialization;
+using TransactionsAluraCSV.Domain.Models;
 
 namespace TransactionsAluraCSV.Domain.Services
 {
@@ -19,12 +20,27 @@ namespace TransactionsAluraCSV.Domain.Services
         public List<Transfer> XmlReader(IFormFile File)
         {
             List<Transfer> transferList;
-            var xmlSerializer = new XmlSerializer(typeof(List<Transfer>));
+            Transacoes transacoes;
+            var xmlSerializer = new XmlSerializer(typeof(Transacoes));
             using (var reader = new StreamReader(File.OpenReadStream()))
             {
-                transferList = (List<Transfer>)xmlSerializer.Deserialize(reader); 
+                transacoes = (Transacoes)xmlSerializer.Deserialize(reader); 
             }
 
+            transferList = transacoes.Transacao.ConvertAll(t =>
+            {
+                return new Transfer()
+                {
+                    DestinationBank = t.Destino.Banco,
+                    DestinationAgency = t.Destino.Agencia,
+                    DestinationAccount = t.Destino.Conta,
+                    OriginBank = t.Origem.Banco,
+                    OriginAgency = t.Origem.Agencia,
+                    OriginAccount = t.Origem.Conta,
+                    TransferAmount = Decimal.Parse(t.Valor),
+                    TransferDate = DateTime.Parse(t.Data),
+                };
+            });
             return transferList;
         }
 

@@ -46,11 +46,11 @@ builder.Services.AddDbContext<PostgreSqlContext>(builder => builder.UseNpgsql(co
 // injeção de dependência dos repositórios
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ITransferRepository, TransferRepository>();
+builder.Services.AddTransient<IFileService, FileService>();
 
 builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<ITransferService, TransferService>();
-builder.Services.AddTransient<IMailProvider, MailProvider>(builder => new MailProvider(api_key, api_secret));
+builder.Services.AddTransient<IMailProvider>(map => new MailProvider(api_key, api_secret));
 
 //else
 //{

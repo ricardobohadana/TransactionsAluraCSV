@@ -16,9 +16,10 @@ namespace TransactionsAluraCSV.Presentation.Controllers
         private readonly ITransferService _transferService;
         private readonly IFileService _fileService;
 
-        public TransactionController(ITransferService transferService)
+        public TransactionController(ITransferService transferService, IFileService fileService)
         {
             _transferService = transferService;
+            _fileService = fileService;
         }
 
         // GET: TransactionController
@@ -114,6 +115,7 @@ namespace TransactionsAluraCSV.Presentation.Controllers
             TransactionReportsModel model = new()
             {
                 MonthList = months,
+                Year = DateTime.Now.Year
             };
 
             return View(model);
