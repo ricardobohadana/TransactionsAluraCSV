@@ -8,6 +8,6 @@ namespace TransactionsAluraCSV.Domain.Interfaces.Mail
 {
     public interface IMailProvider
     {
-        void SendPassword(string emailAddress, string password);
+        Task SendPassword(string emailAddress, string password);
     }
 }

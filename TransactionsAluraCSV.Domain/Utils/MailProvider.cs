@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Mailjet.Client;
+using Mailjet.Client.Resources;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,19 +14,71 @@ namespace TransactionsAluraCSV.Domain.Utils
 {
     public class MailProvider: IMailProvider
     {
-        public void SendPassword(string emailAddress, string password)
+        private string _api_key;
+        private string _api_secret;
+
+        public MailProvider(string api_key, string api_secret)
         {
-            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            _api_key = api_key;
+            _api_secret = api_secret;
+        }
+
+        private MailjetClient CreateMailjetClient()
+        {
+            return new MailjetClient(_api_key, _api_secret);
+        }
+
+        public async Task SendPassword(string emailAddress, string password)
+        {
+            var client =  CreateMailjetClient();
+            var request = new MailjetRequest
             {
-                Credentials = new NetworkCredential("dfc708e3d9b55c", "ff68f30586da7f"),
-                EnableSsl = true
-            };
-            client.Send(
-                "cacolorde@gmail.com",
-                emailAddress,
-                "Thank you!",
-                $"We thank you for your interest in being a part of this sites' users. Here is your password: <strong> {password}</strong>"
-            );
+                Resource = Send.Resource
+            }
+            .Property(Send.Messages, new JArray {
+             new JObject {
+              {
+               "From",
+               new JObject {
+                {"Email", "cacolorde@gmail.com"},
+                {"Name", "AnaliseDeTransacoes"}
+               }
+              }, {
+               "To",
+               new JArray {
+                new JObject {
+                 {
+                  "Email",
+                  emailAddress
+                 }, {
+                  "Name",
+                  emailAddress
+                 }
+                }
+               }
+              }, {
+               "Subject",
+               "Bem vindo, aqui está sua senha de acesso"
+              }, {
+               "TextPart",
+               "A sua senha é: "
+              }, {
+               "HTMLPart",
+               $"<strong> {password}</strong>"
+              }, {
+               "CustomID",
+               emailAddress
+              }
+             }
+            });
+
+            MailjetResponse response = await client.PostAsync(request);
+            if (!response.IsSuccessStatusCode) 
+            {
+                throw new Exception($"Status de erro: {response.StatusCode}\nInformações: {response.GetErrorInfo()}\nMensagem de erro: {response.GetErrorMessage()}");
+            }
+
+
         }
     }
 }

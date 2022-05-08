@@ -12,7 +12,6 @@ using TransactionsAluraCSV.Infra.Data.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 // Working with sessions
@@ -24,6 +23,13 @@ Env.Load();
 bool isDev = false;
 
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
+var api_key = Environment.GetEnvironmentVariable("EMAIL_APÌ_KEY");
+var api_secret = Environment.GetEnvironmentVariable("EMAIL_SECRET_KEY");
+
+if (api_key == null || api_secret == null)
+{
+    throw new Exception("Problemas com as credenciais do email");
+}
 
 if (connectionString == null)
 {
@@ -44,7 +50,7 @@ builder.Services.AddTransient<ITransferRepository, TransferRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<ITransferService, TransferService>();
-builder.Services.AddTransient<IMailProvider, MailProvider>();
+builder.Services.AddTransient<IMailProvider, MailProvider>(builder => new MailProvider(api_key, api_secret));
 
 //else
 //{
@@ -67,6 +73,9 @@ builder.Services.AddTransient<IMailProvider, MailProvider>();
 //}
 
 
+
+
+
 // Habilitando o projeto para usar cookies e autenticação de acesso
 builder.Services.Configure<CookiePolicyOptions>(options => { options.MinimumSameSitePolicy = SameSiteMode.None; });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
@@ -84,6 +93,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Forbidden/";
     }
 );
+
+// Railway app
+
+var portVar = Environment.GetEnvironmentVariable("PORT");
+if (portVar is { Length: > 0 } && int.TryParse(portVar, out int port))
+{
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(port);
+    });
+}
 
 
 
@@ -105,6 +125,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+    pattern: "{controller=Home}/{action=Index}"
+);
 
 app.Run();
