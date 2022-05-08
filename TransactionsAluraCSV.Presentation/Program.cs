@@ -23,7 +23,7 @@ Env.Load();
 bool isDev = false;
 
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
-var api_key = Environment.GetEnvironmentVariable("EMAIL_APÌ_KEY");
+var api_key = Environment.GetEnvironmentVariable("EMAIL_API_KEY");
 var api_secret = Environment.GetEnvironmentVariable("EMAIL_SECRET_KEY");
 
 if (api_key == null || api_secret == null)
