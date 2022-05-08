@@ -15,7 +15,7 @@ namespace TransactionsAluraCSV.Infra.Data.Contexts
         {
             var configurationBuilder = new ConfigurationBuilder();
             //var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
-            var path = Path.Combine(Directory.GetCurrentDirectory(),"appsettings.json");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettingsDevelopment.json");
             configurationBuilder.AddJsonFile(path, false);
             var root = configurationBuilder.Build();
             var connectionstring = root.GetSection("ConnectionStrings").GetSection("Postgres").Value;
