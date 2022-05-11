@@ -78,9 +78,9 @@ namespace TransactionsAluraCSV.Presentation.Controllers
         {
             try
             {
-                DateTime registerDate = DateTime.SpecifyKind(DateTime.Parse(date), DateTimeKind.Utc);
+                var transferDate = date.Split("-");
 
-                List<Transfer> transfersList = _transferService.GetTransfersByDate(registerDate);
+                List<Transfer> transfersList = _transferService.GetTransfersByDate(int.Parse(transferDate[0]), int.Parse(transferDate[1]), int.Parse(transferDate[2]));
 
                 TransactionDetailModel model = new()
                 {

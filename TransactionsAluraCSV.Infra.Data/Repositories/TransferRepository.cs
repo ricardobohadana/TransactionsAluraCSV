@@ -37,5 +37,17 @@ namespace TransactionsAluraCSV.Infra.Data.Repositories
         {
             return _postgreSqlContext.Transfers.Where(t => t.TransferDate.Year == year && t.TransferDate.Month == month).ToList();
         }
+
+        public List<Transfer> GetByTransferDate(int day, int month, int year)
+        {
+            var data = _postgreSqlContext.Transfers.Where(t =>
+                t.TransferDate.Year == year &&
+                t.TransferDate.Month == month &&
+                t.TransferDate.Day == day
+            ).ToList();
+
+
+            return data;
+        }
     }
 }

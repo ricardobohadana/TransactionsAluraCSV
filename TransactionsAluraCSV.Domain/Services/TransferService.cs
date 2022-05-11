@@ -90,9 +90,9 @@ namespace TransactionsAluraCSV.Domain.Services
             }).ToList();
         }
 
-        public List<Transfer> GetTransfersByDate(DateTime date)
+        public List<Transfer> GetTransfersByDate(int day, int month, int year)
         {
-            return _transferRepository.GetByRegisterDate(date);
+            return _transferRepository.GetByTransferDate(day, month, year);
 
         }
 

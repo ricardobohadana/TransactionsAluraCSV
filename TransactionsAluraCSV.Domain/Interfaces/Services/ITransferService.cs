@@ -14,7 +14,7 @@ namespace TransactionsAluraCSV.Domain.Interfaces.Services
 
         List<TransferGroup> GetTransferGroups();
 
-        List<Transfer> GetTransfersByDate(DateTime date);
+        List<Transfer> GetTransfersByDate(int day, int month, int year);
 
         SuspiciousData GetSuspiciousMovements(int month, int year);
     }

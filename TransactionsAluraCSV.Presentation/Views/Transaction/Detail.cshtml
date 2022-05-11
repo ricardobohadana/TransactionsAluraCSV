@@ -3,11 +3,12 @@
 @{
     ViewData["Title"] = "Transações";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string dayTransfer = Model.Transfers[0].TransferDate.ToString("dd-MM-yyyy");
 }
 
 <div class="card">
     <div class="card-header">
-        <div class="card-header-title">Detalhes de transações enviadas do dia @Model.Transfers[0].TransferDate.ToShortDateString()</div>
+        <div class="card-header-title">Detalhes de transações enviadas do dia @dayTransfer</div>
     </div>
     <div class="card-body">
         <table class="table is-striped is-hoverable is-fullwidth is-bordered">
